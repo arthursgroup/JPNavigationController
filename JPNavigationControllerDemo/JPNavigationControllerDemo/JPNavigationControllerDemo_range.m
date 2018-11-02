@@ -51,8 +51,6 @@
 
 - (void)setup{
     self.title = @"pop 手势范围";
-    self.blankWidCons.constant = 0;
-    [self.view layoutIfNeeded];
     
     UIButton *rangeBtn = [UIButton new];
     [rangeBtn setTitle:@"手势范围设为 100.f" forState:UIControlStateNormal];
@@ -63,6 +61,14 @@
     
     self.navigationController.jp_linkViewHeight = 44.f;
     self.navigationController.jp_linkView = rangeBtn;
+    
+    // 读取当前的手势范围值,来定义控件
+    CGFloat currentPopRange = self.navigationController.jp_interactivePopMaxAllowedInitialDistanceToLeftEdge;
+    if (currentPopRange != JPScreenW) {
+        rangeBtn.selected = YES;
+    }
+    self.blankWidCons.constant = JPScreenW - currentPopRange;
+    [self.view layoutIfNeeded];
 }
 
 - (void)rangeBtnClick:(UIButton *)btn{
